@@ -5,6 +5,7 @@ import java.util.Iterator;
 
 import softarch.portal.data.RegularData;
 import softarch.portal.db.RegularDatabase;
+import softarch.portal.db.sql.RegularDatabaseSQL;
 
 /**
  * This is a test program for the regular database.
@@ -35,7 +36,7 @@ public class TestRegularDatabase {
 		System.out.println("queryString     : " + queryString);
 		System.out.println();
 
-		RegularDatabase db = new RegularDatabase(	dbUser,
+		RegularDatabase db = new RegularDatabaseSQL(	dbUser,
 								dbPassword,
 								dbUrl);
 

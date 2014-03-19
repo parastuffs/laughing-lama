@@ -3,6 +3,7 @@ package softarch.portal.db.test;
 import softarch.portal.data.RawData;
 import softarch.portal.data.SoftwareRepository;
 import softarch.portal.db.RawDatabase;
+import softarch.portal.db.sql.RawDatabaseSQL;
 
 import java.util.Date;
 import java.net.URL;
@@ -15,7 +16,7 @@ import java.net.URL;
 public class TestAddRawData {
 	public static void main(String[] args) {
 		try {
-			RawDatabase rawDb = new RawDatabase(
+			RawDatabase rawDb = new RawDatabaseSQL(
 				"njonchee",
 				"chivas12",
 				"localhost/njonchee");

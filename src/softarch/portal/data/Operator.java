@@ -99,4 +99,9 @@ public class Operator extends UserProfile {
 			df.format(lastLogin) + "\' " + "WHERE Username = \'" +
 			normalizeSql(username) + "\';";
 	}
+	
+	public String asCSV(){
+		//Not asked
+		return null;
+	}
 }

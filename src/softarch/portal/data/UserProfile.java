@@ -20,6 +20,8 @@ public abstract class UserProfile extends Data {
 	 */
 	public abstract String asSql();
 
+	public abstract String asCSV();
+	
 	/**
 	 * When a user has logged in successfully, he will be
 	 * redirected to this page.

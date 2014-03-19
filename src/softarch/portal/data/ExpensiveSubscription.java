@@ -1,6 +1,7 @@
 package softarch.portal.data;
 
 import javax.servlet.http.HttpServletRequest;
+
 import java.util.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -105,5 +106,9 @@ public class ExpensiveSubscription extends RegularUser {
 	                normalizeSql(emailAddress) + "\', LastLogin = \'" +
 			df.format(lastLogin) + "\' " + "WHERE Username = \'" +
 			normalizeSql(username) + "\';";
+	}
+	
+	public String asCSV(){
+		return "expensive:"+this.username +","+ this.password +","+ this.firstName +","+ this.lastName +","+ this.emailAddress +","+ this.lastLogin;
 	}
 }

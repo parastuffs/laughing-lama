@@ -24,10 +24,9 @@ public class ApplicationFacade {
 	 */
 	public ApplicationFacade(	String dbUser,
 					String dbPassword,
-					String dbUrl) {
-		
+					String dbUrl, String dbFormat) {
 		DatabaseFacade dbFacade
-			= new DatabaseFacade(dbUser, dbPassword, dbUrl);
+			= new DatabaseFacade(dbUser, dbPassword, dbUrl, dbFormat);
 		
 		userManager		= new UserManager(dbFacade);
 		queryManager		= new QueryManager(dbFacade);
