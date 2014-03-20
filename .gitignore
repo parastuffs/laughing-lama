@@ -3,5 +3,5 @@
 .DS_Store
 .project
 .settings/
-web_portal.cfg
-WebContent/WEB-INF/lib/web.xml
+*web_portal.cfg
+*WebContent/WEB-INF/lib/web.xml

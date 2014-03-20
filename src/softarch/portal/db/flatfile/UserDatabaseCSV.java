@@ -148,18 +148,19 @@ public class UserDatabaseCSV extends DatabaseCSV implements UserDatabase  {
 	public boolean userExists(String username)throws DatabaseException{
 		boolean found = false;
 		try{
-			BufferedReader reader = new BufferedReader(new FileReader(cheapUsers));
+			//BufferedReader reader = new BufferedReader(new FileReader(cheapUsers));
+			BufferedReader reader;
 
 			String line;
 			String splittedLine[] = null;
-			reader = new BufferedReader(new FileReader(expUsers));
+			reader = new BufferedReader(new FileReader(cheapUsers));
 			while ((line = reader.readLine()) != null && !found){
 				splittedLine = line.split(",");
 				if(splittedLine[0].equals(username))
 					found = true;
 			}
 			reader.close();
-			reader = new BufferedReader(new FileReader(expUsers));
+			reader = new BufferedReader(new FileReader(freeUsers));
 			while ((line = reader.readLine()) != null && !found){
 				splittedLine = line.split(",");
 				if(splittedLine[0].equals(username))

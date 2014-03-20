@@ -21,6 +21,8 @@ public class ApplicationFacade {
 
 	/**
 	 * Creates a new application facade.
+	 * @param dbFormat
+	 * 		either "csv" or "sql".
 	 */
 	public ApplicationFacade(	String dbUser,
 					String dbPassword,
