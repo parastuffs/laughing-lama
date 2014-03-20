@@ -1,0 +1,60 @@
+\documentclass[a4paper,10pt]{report}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{pdflscape}
+
+% Title Page
+\title{Software architecture \\ Assignment 2}
+\author{ Dehouck Samuel, Delhaye Quentin \\}
+
+
+\begin{document}
+\maketitle
+
+\chapter{Introduction}
+
+In this project, we were asked to refactor (flawed) three-tier architecture that implements a web portal applicaton which allows to store and retreive informations about books, articles, etc... Moreover, we needed to identify the different flaws of
+this architecture.\\
+More precisely, we had to refactor the database layer in order to be able to easily insert a new format of database. The details of this new implementation will be detailed in the first section. Next, we will give the flaws that we found in the architecture.
+
+\chapter{Refactoring}
+
+For this project, we had to refactor the database layer in order to add a new database based on \textit{CSV} files. The original implementation didn't allow us to easily add this new layer and that is where the refactoring is done.
+\newline
+First, we needed to change some names to make them more precise: \textit{RawDatabase} became \textit{RawDataseSQL}, \textit{UserDatabase} \textit{UserDatabaseSQL}, \textit{RegularDatabase} \textit{RegularDatabaseSQL} and finally \textit{Database} \textit{DatabaseSQL}. 
+\newline
+In a second time, we added a new level of abstraction with some interfaces that are implemented by the SQL components inherit: \textit{RawDatabase}, \textit{UserDatabase}, \textit{RegularDatabase}.  We also created a new abstract 
+class Database from which DatabaseSQL inherits. With this generic interfaces and the abstract class, it became much easier to add a new kind of database.
+\newline
+Finally, we created the \textit{CSV} database with some new classes \textit{RawDatabaseCSV}, \textit{UserDatabaseCSV} and \textit{RegularDatabase} that implement the corresponding interfaces and \textit{DatabaseCSV} inheriting from \textit{Database}.
+\newline
+All these classes have been reorganized in the new packages \textit{db.flatfile} and \textit{db.sql}.
+\newline
+
+\begin{figure}[h]
+ \includegraphics[width=\textwidth]{ClassDiagram.png}
+\end{figure}
+
+As we can see with this new architecture, it is much easier to add a new kind of database.
+\newline
+
+\pagebreak
+
+Some others changes needed to be done in order to have a working implementation:
+\begin{itemize}
+ \item We added a new line in the file web\_portal.cfg to specify the format of the database.
+ \item The constructor of the class \textit{ApplicationFacade} has been modified to take the format into account.
+ \item The constructor of the class \textit{DatabaseFacade} has been modified in the same way and now build the database accordingly.
+ \item In order to store the user profiles into the database, a new method \textit{asCSV} has been added in the classes \textit{UserProfile} and children.
+\end{itemize}
+
+
+
+\chapter{Design flaws}
+
+
+
+\chapter{Conclusion}
+
+\tableofcontents
+\end{document}          
