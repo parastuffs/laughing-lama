@@ -11,7 +11,6 @@ public class RegularDatabaseRemote extends DatabaseRemote implements RegularData
 
 	public RegularDatabaseRemote(String dbUser, String dbPassword, String dbUrl) {
 		super(dbUser, dbPassword, dbUrl);
-		// TODO Auto-generated constructor stub
 	}
 
 	public List findRecords(String informationType, String queryString)
@@ -22,19 +21,16 @@ public class RegularDatabaseRemote extends DatabaseRemote implements RegularData
 
 	public List findRecordsFrom(String informationType, Date date)
 			throws DatabaseException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new DatabaseException("Not implemented");
 	}
 
 	public void add(RegularData rd) throws DatabaseException {
-		// TODO Auto-generated method stub
-		
+		throw new DatabaseException("Not implemented");
 	}
 
 	public int getNumberOfRegularRecords(String informationType)
 			throws DatabaseException {
-		// TODO Auto-generated method stub
-		return 0;
+		throw new DatabaseException("Not implemented");
 	}
 
 }
