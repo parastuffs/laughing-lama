@@ -6,7 +6,7 @@
 		<servlet-class>softarch.portal.ui.InternetFrontEnd</servlet-class>
 		<init-param>
 			<param-name>config_file</param-name>
-			<param-value>/home/oz/softArchworkspace/web_portal/web_portal.cfg</param-value>
+			<param-value>/home/para/documents/polytech2015/MA1/INFOY080/Assignment03/laughing-lama/web_portal.cfg</param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>

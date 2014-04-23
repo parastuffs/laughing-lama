@@ -1,10 +1,6 @@
 *~
-*swp
-.DS_Store
+*.lck
+*.DS_Store
 .project
-.settings/
-*web_portal.cfg
-*WebContent/WEB-INF/lib/web.xml
-*.aux
-*.log
-*.toc
+.settings/*
+.DS_Store
