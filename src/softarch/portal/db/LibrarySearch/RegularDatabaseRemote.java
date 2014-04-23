@@ -30,20 +30,40 @@ public class RegularDatabaseRemote extends DatabaseRemote implements RegularData
 		LibrarySearchServiceLocator loc = new LibrarySearchServiceLocator();
 		URL url = null;
 		LibrarySearchRequest req = new LibrarySearchRequest(queryString);
-		List<Book> books = new ArrayList<Book>();
+		List<Book> books = new ArrayList<Book>();//List of books containing the results parsed.
 
 		try {
 			url = new URL("http://localhost:8080/ode/processes/LibrarySearchService?wsdl");//'?wsdl' required?
 		
 			LibrarySearchSOAPBindingStub service = new LibrarySearchSOAPBindingStub(url, loc);
-			LibrarySearchResponse res = service.process(req);
-			BookList bookList = res.getBooks();
-			librarysearch.soft.Book[] bookList2 = bookList.getBook();
+			LibrarySearchResponse res = service.process(req);//Process the request
+			BookList bookList = res.getBooks();//Get the results
+			librarysearch.soft.Book[] bookListToParse = bookList.getBook();
+			
+			// Parse and convert the result -->
+			for(int i = 0; i < bookListToParse.length; ++i) {
+				
+				String author = bookListToParse[i].getAuthor();
+				long isbn = bookListToParse[i].getIsbn().longValue();
+				int pages = bookListToParse[i].getPages();
+				Date date = bookListToParse[i].getPublicationDate().getTime();
+				String publisher = bookListToParse[i].getPublisher();
+				String review = bookListToParse[i].getReview();
+				String summary = bookListToParse[i].getSummary();
+				String title = bookListToParse[i].getTitle();
+				
+				books.add(new Book(null, author, isbn, pages, date, publisher, review, summary, title));
+			}
+			// <--
 		} catch (AxisFault e) {
 			e.printStackTrace();
 		} catch (RemoteException e) {
 			e.printStackTrace();
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
 		}
+		
+		return books;
 		
 	}
 
