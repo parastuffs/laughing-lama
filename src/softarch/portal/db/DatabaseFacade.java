@@ -1,5 +1,6 @@
 package softarch.portal.db;
 
+import softarch.portal.data.Book;
 import softarch.portal.data.RawData;
 import softarch.portal.data.RegularData;
 import softarch.portal.data.UserProfile;
@@ -106,7 +107,13 @@ public class DatabaseFacade {
 	public List findRecords(String informationType, String queryString)
 			throws DatabaseException {
 
-		return regularDb.findRecords(informationType, queryString);
+		List<Book> localResults = this.regularDb.findRecords(informationType, queryString);
+		List<Book> remoteResults = this.remoteDb.findRecords(informationType, queryString);
+		
+		List<Book> results = localResults;
+		localResults.addAll(remoteResults);
+		
+		return results;
 	}
 
 	/**
