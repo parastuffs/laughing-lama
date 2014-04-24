@@ -1,6 +1,16 @@
 \documentclass[a4paper,10pt]{article}
-\usepackage[utf8]{inputenc}
+\usepackage[utf8x]{inputenc}
 \usepackage{graphicx}
+\usepackage{geometry}
+
+\geometry{
+body={160mm,230mm},
+left=25mm,top=25mm,
+headheight=25mm,headsep=7mm,
+marginparsep=4mm,
+marginparwidth=20mm,
+footnotesep=50mm
+}
 
 %opening
 \title{Software Architectures
@@ -32,11 +42,14 @@ As we can see, the first two actions need to be done sequentially: we need to re
 The last two pairs of \textit{Invoke-Assign} are unrelated and their execution can be separated.
 In order to parallelize these two couples, we need to use flows. A flow is declared using the tag \texttt{\textless bpel:flow\textgreater}, in which all the declared sequences (using \texttt{\textless bpel:sequence\textgreater})will be executed at the same time.
 
-A graph of sequence representing the execution can be found here under:
+A graph representing the execution can be found on figure~\ref{fig:graph_seq}
 
-\vspace{2cm}
+%\vspace{2cm}
  \begin{figure}[h]
+	 \centering
  \includegraphics[width=7cm]{diagsequence.png}
+ \label{fig:graph_seq}
+ \caption{Execution of the BPEL process.}
 \end{figure}
 
 
@@ -45,6 +58,7 @@ A graph of sequence representing the execution can be found here under:
 \subsection{Data Structure Strategy}
 In this table, we describe how books are defined in each library. \\
 
+\begin{center}
 \begin{tabular}{|c|c|c|}
 \hline
   & National Library & SoftLab Library \\
@@ -62,6 +76,7 @@ In this table, we describe how books are defined in each library. \\
   Title & String & String \\
   \hline
 \end{tabular}
+\end{center}
 \vspace{0.8cm}
 
  In order to ease the use of the \textit{LibrarySearch} by additional services, we could normalize the data. There are two ways:
@@ -77,6 +92,16 @@ In this table, we describe how books are defined in each library. \\
 
 
 \section{Integration with Legacy Software}
+In order to access the remote web services, we added a new package \texttt{softarch.portal.db.LibrarySearch} containing two classes: \texttt{DatabaseRemote} and \texttt{RegularDatabaseRemote}.
+Those are used in the constructor of \texttt{DatabaseFacade} by initializing a regular remote database, no matter what local database configuration has been chosen.
+
+On top of that, the \texttt{findRecords()} method had to be modified.
+It now searches in both local and remote databases, and then concatenates the respective results into one single list of \texttt{Book} to return.
+
+The data mapping from \texttt{librarysearch.soft.Book}\footnote{From the client code generated from the \textsc{wsdl} specification.} to \texttt{softarch.portal.data.Book} is done in \texttt{RegularDatabaseRemote.findRecords()} method.
+The results from the \textsc{bpel} process are stored in a list of \texttt{Book} of the first type, which is then iterated over and from which each field is extracted and stored in a list of \texttt{Book} of the second type.
+
+The advantage of doing so is that the translation is kept in one place, but adding a new field in the web service book type, or modifying any field would require a modification in this process as well.
 
 \section{Architecture}
 
