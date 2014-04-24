@@ -28,20 +28,33 @@ public class RegularDatabaseRemote extends DatabaseRemote implements RegularData
 	public List findRecords(String informationType, String queryString)
 			throws DatabaseException {
 		LibrarySearchServiceLocator loc = new LibrarySearchServiceLocator();
+		System.out.println("Locator created.");
 		URL url = null;
 		LibrarySearchRequest req = new LibrarySearchRequest(queryString);
+		System.out.println("LibrarySearchRequest created.");
 		List<Book> books = new ArrayList<Book>();//List of books containing the results parsed.
 
 		try {
 			url = new URL("http://localhost:8080/ode/processes/LibrarySearchService?wsdl");//'?wsdl' required?
 		
 			LibrarySearchSOAPBindingStub service = new LibrarySearchSOAPBindingStub(url, loc);
+			System.out.println("LibrarySearchSOAPBindingStub created.");
 			LibrarySearchResponse res = service.process(req);//Process the request
+			System.out.println("LibrarySearchResponse created.");
 			BookList bookList = res.getBooks();//Get the results
+			System.out.println("BookList got from res.");
+			if(bookList == null) {
+				System.err.println("Beware, bookList is null");
+			}
 			librarysearch.soft.Book[] bookListToParse = bookList.getBook();
+			System.out.println("Booklist created from BookList.");
+			if(bookListToParse == null) {
+				System.err.println("Beware, bookListToParse is null");
+			}
 			
 			// Parse and convert the result -->
 			for(int i = 0; i < bookListToParse.length; ++i) {
+				System.out.println("Round "+i);
 				
 				String author = bookListToParse[i].getAuthor();
 				long isbn = bookListToParse[i].getIsbn().longValue();
@@ -53,6 +66,7 @@ public class RegularDatabaseRemote extends DatabaseRemote implements RegularData
 				String title = bookListToParse[i].getTitle();
 				
 				books.add(new Book(null, author, isbn, pages, date, publisher, review, summary, title));
+				System.out.println("Author: "+author);
 			}
 			// <--
 		} catch (AxisFault e) {
@@ -63,6 +77,7 @@ public class RegularDatabaseRemote extends DatabaseRemote implements RegularData
 			e.printStackTrace();
 		}
 		
+		System.out.println("Returning books.");
 		return books;
 		
 	}

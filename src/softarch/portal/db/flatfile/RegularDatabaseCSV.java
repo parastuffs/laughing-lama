@@ -1,5 +1,6 @@
 package softarch.portal.db.flatfile;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
 import java.util.Vector;
@@ -41,7 +42,8 @@ public class RegularDatabaseCSV extends DatabaseCSV implements RegularDatabase{
 	 * that match the given query string.
 	 */
 	public List findRecords(String informationType, String queryString)throws DatabaseException{
-		throw new DatabaseException("Not implemented");
+		//throw new DatabaseException("Not implemented");
+		return new ArrayList();
 	}
 
 	

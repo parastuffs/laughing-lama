@@ -57,11 +57,13 @@ public class DatabaseFacade {
 				throw new DatabaseException("Database format not implemented");
 			}
 			
-			this.remoteDb = new RegularDatabaseRemote(dbUser, dbPassword, dbUrl);
 		}
 		catch(DatabaseException e){
 			e.printStackTrace();
 		}
+		
+		this.remoteDb = new RegularDatabaseRemote(dbUser, dbPassword, dbUrl);
+		System.out.println("Remote DB loaded.");
 	}
 
 	/**
@@ -108,7 +110,9 @@ public class DatabaseFacade {
 			throws DatabaseException {
 
 		List<Book> localResults = this.regularDb.findRecords(informationType, queryString);
+		System.out.println("Local search done.");
 		List<Book> remoteResults = this.remoteDb.findRecords(informationType, queryString);
+		System.out.println("Remote search done.");
 		
 		List<Book> results = localResults;
 		localResults.addAll(remoteResults);
