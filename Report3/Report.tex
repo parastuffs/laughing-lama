@@ -22,6 +22,10 @@ Assignment 3: Service Oriented Architectures}
 \maketitle
 
 \section{Introduction}
+This assignment was about adding a new feature to the \texttt{web\_portal} application introduced in the previous assignment.
+The new functionnality was to query the \texttt{LibrarySearch}web service, consisting in two remote databases.
+The \textsc{bpel} process had to be optimized as well by parallelizing what could be.
+
 
 \section{BPEL Processes}
 
@@ -47,9 +51,9 @@ A graph representing the execution can be found on figure~\ref{fig:graph_seq}
 %\vspace{2cm}
  \begin{figure}[h]
 	 \centering
- \includegraphics[width=7cm]{diagsequence.png}
- \label{fig:graph_seq}
+ \includegraphics[width=8cm]{diagsequence.png}
  \caption{Execution of the BPEL process.}
+ \label{fig:graph_seq}
 \end{figure}
 
 
@@ -98,13 +102,38 @@ Those are used in the constructor of \texttt{DatabaseFacade} by initializing a r
 On top of that, the \texttt{findRecords()} method had to be modified.
 It now searches in both local and remote databases, and then concatenates the respective results into one single list of \texttt{Book} to return.
 
+Our \texttt{RegularDatabaseCSV} class had to be modified as well.
+Indeed, the \texttt{findRecords()} method threw a \texttt{DatabaseException} by default, since that feature was not implemented yet.
+It now returns an empty \texttt{ArrayList}, no books being stored in that local database.
+
 The data mapping from \texttt{librarysearch.soft.Book}\footnote{From the client code generated from the \textsc{wsdl} specification.} to \texttt{softarch.portal.data.Book} is done in \texttt{RegularDatabaseRemote.findRecords()} method.
 The results from the \textsc{bpel} process are stored in a list of \texttt{Book} of the first type, which is then iterated over and from which each field is extracted and stored in a list of \texttt{Book} of the second type.
 
 The advantage of doing so is that the translation is kept in one place, but adding a new field in the web service book type, or modifying any field would require a modification in this process as well.
 
-\section{Architecture}
 
-\section{Conclusion}
+
+\section{Architecture}
+The figure~\ref{fig:arch} summarizes the architecture of the subpart of the application handling the databases.
+The \texttt{DatabaseFacade} manipulates both local and remote databases, the former by directly fetching the information in the databases, the later by using the \textsc{bpel} process.
+The \texttt{DatabaseFacade} is linked to the rest of the application through the \texttt{ApplicationFacade}.
+In practice, a user's request will be passed to the \texttt{DatabaseFacade} that will transfer it to the local and remote ressources before returning it to the \texttt{ApplicationFacade}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{Architecture.png}
+\caption{Architecture of the the refactored part of the application.}
+\label{fig:arch}
+\end{figure}
+
+The figure~\ref{fig:classes} depicts the classes diagram of the refactored part of the application. The new part is on the rightern side, with the two \texttt{..Remote} classes.
+As the refactoring of the previous assignment introduced generic interfaces and classes to inherit from, one can see that the rest of the structure of the code did not need to be modified.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{diagrammeClasses.png}
+\caption{Classes diagramme of the databases part of the application. The new part from the second assignment is on the right, \texttt{RegularDatabaseRemote} and \texttt{DatabaseRemote}.}
+\label{fig:classes}
+\end{figure}
 
 \end{document}
