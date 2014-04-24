@@ -1,0 +1,76 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+
+%opening
+\title{Software Architectures
+Assignment 3: Service Oriented Architectures}
+\author{Dehouck Samuel, Delhaye Quentin}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+\section{BPEL Processes}
+
+\subsection{Parallelization}
+Before any modification of the process, the different actions done in the main sequence were:
+\begin{itemize}
+ \item receiveInput: receives input from the requester.
+ \item PrepareResponse: prepares the response variable.
+ \item AssignSearchRequest: assigns the parameters.
+ \item InvokeSearchBooks: invokes the search in the SoftLab library. 
+ \item AssignSearchRequest: assigns the parameters.
+ \item InvokeSearchForBooks: invokes the search in the National library.
+ \item AssignResultSoftLib: assigns the result to the response.
+ \item replyOutput: sends the response to the requester.
+\end{itemize}
+
+As we can see, the first two actions need to be done sequentially: we need to receive the input first before preparing the response. The same goes for the last two: we need to prepare the response before sending it.
+The last two pairs of \textit{Invoke-Assign} are unrelated and their execution can be separated.
+In order to parallelize these two couples, we need to use flows. A flow is declared using the tag \texttt{\textless bpel:flow\textgreater}, in which all the declared sequences (using \texttt{\textless bpel:sequence\textgreater})will be executed at the same time.
+
+A graph of sequence representing the execution can be found here under:
+
+\textbf{TO DO} graphe de flow
+
+\subsection{Data Structure Strategy}
+In this table, we describe how books are defined in each library. \\
+
+\begin{tabular}{|c|c|c|}
+\hline
+  & National Library & SoftLab Library \\
+  \hline
+  Author & String & String \\
+  \hline
+  Date & DateTime & Int \\
+  \hline
+  ISBN & String & Int \\
+  \hline
+  Language & String & Language \\
+  \hline
+  Publisher & String & String \\
+  \hline
+  Title & String & String \\
+  \hline
+\end{tabular}
+\vspace{0.8cm}
+
+ In order to ease the use of the \textit{LibrarySearch} by additional services, we could normalize the data. There are two ways:
+ \begin{itemize}
+  \item We could use the types defined by the National Library. But in order to convert the data from the SoftLab Library, we would need to change the year in a full date (day, month and year).
+  Some false informations would then be created. The transformation from a \textit{String} to an \textit{Int} would be made without any loss but from a \textit{String} a type \textit{Language}, it would depend on 
+  how \textit{Language} is implemented.
+  \item We could use the types defined by the SoftLab Library but we would then loose some informations about the date for instance.
+ \end{itemize}
+
+
+
+\section{Integration with Legacy Software}
+
+\section{Architecture}
+
+\section{Conclusion}
+
+\end{document}
