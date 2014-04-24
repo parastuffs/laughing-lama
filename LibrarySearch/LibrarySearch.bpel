@@ -94,7 +94,7 @@
 
 
 		<bpel:flow name="invokeWebServices">
-			<bpel:sequence name="sl_service">
+			<bpel:sequence name="s1_service">
 				<bpel:assign name="AssignSearchRequest" validate="no">
 					<bpel:copy>
 						<bpel:from>
@@ -117,7 +117,7 @@
 					partnerLink="SoftLibPartnerLink" portType="sl:SoftLibraryPortType" />
 			</bpel:sequence>
 
-			<bpel:sequence name="nl_service">
+			<bpel:sequence name="n1_service">
 				<bpel:assign name="AssignSearchRequest" validate="no">
 					<bpel:copy>
 						<bpel:from>
