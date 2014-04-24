@@ -6,6 +6,7 @@ import softarch.portal.data.UserProfile;
 import softarch.portal.db.sql.RawDatabaseSQL;
 import softarch.portal.db.sql.RegularDatabaseSQL;
 import softarch.portal.db.sql.UserDatabaseSQL;
+import softarch.portal.db.LibrarySearch.RegularDatabaseRemote;
 import softarch.portal.db.flatfile.RawDatabaseCSV;
 import softarch.portal.db.flatfile.RegularDatabaseCSV;
 import softarch.portal.db.flatfile.UserDatabaseCSV;
@@ -20,6 +21,7 @@ import java.util.Date;
 public class DatabaseFacade {
 	private UserDatabase	userDb;
 	private RegularDatabase	regularDb;
+	private RegularDatabase remoteDb;
 	private RawDatabase	rawDb;
 
 	/**
@@ -53,6 +55,8 @@ public class DatabaseFacade {
 			else{
 				throw new DatabaseException("Database format not implemented");
 			}
+			
+			this.remoteDb = new RegularDatabaseRemote(dbUser, dbPassword, dbUrl);
 		}
 		catch(DatabaseException e){
 			e.printStackTrace();
